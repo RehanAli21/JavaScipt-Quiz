@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            body
+            {
+                text-align: center;
+                margin: none;
+                padding: none;
+                font-family: sans-serif;
+                font-size: 1.5em;
+            }
+            h1
+            {
+                margin: 5%;
+            }
+            .btn
+            {
+                padding: 10px;
+                margin: 20px;
+                font-size: 1em;
+                border: 2px solid black;
+                background-color: black;
+                color: white;
+                outline: none;
+            }
+            .btn:active
+            {
+                transform: scale(0.9);
+            }
+        </style>
+
+        <script type="text/javascript">
+            
+            const question = 
+            [
+                {
+                    question: 'Using _______ statement is how you test for a specific condition.',
+                    options: ['Select', 'Switch', 'If', 'For'],
+                    answer: 'If'
+                },
+                {
+                    question: 'Which file controls how your frames will appear?',
+                    options: ['Frameset', 'Master Document', 'Template', 'Timeline'],
+                    answer: 'Frameset'
+                },
+                {
+                    question: 'Which HTML attribute is used to define inline styles?',
+                    options: ['font', 'class', 'style', 'none of these'],
+                    answer: 'style'
+                },
+                {
+                    question: 'Which OS is Open Sourse',
+                    options: ['Linux', 'Unix', 'Windows', 'IOS'],
+                    answer: 'Linux'
+                }
+            ];
+
+            let totalQuestion = question.length;
+            let currentQuestion = 0;
+            let score = 0;
+            
+            Restart = () =>
+            {
+                score = 0;
+                currentQuestion = 0;
+                start();
+            }
+
+            AnswerButton = questionNum => question[questionNum].options.map( data => document.querySelector("#optionsArea").innerHTML += '<button onclick="UserAnswer('+"'"+data+"'"+')" value="'+data+'" class="btn">'+data+'</button>')
+
+            Questions = questionNum => document.querySelector("#questionArea").innerHTML = question[questionNum].question
+
+            QuestionChange = (num, current) => document.querySelector("#numArea").innerHTML = "Question <span>"+(current+1)+" of "+num+"</span>";
+
+            URLs = () => {currentQuestion++; start();} //this function is for lesser line in UserAnswer function
+
+            UserAnswer = ans =>
+            {
+                if(ans == question[currentQuestion].answer)
+                {
+                    score++;
+                    URLs();                    
+                }
+                else
+                    URLs();
+            }
+
+            start = () =>
+            {
+                if (currentQuestion < question.length)
+                { 
+                    document.querySelector("#first").innerHTML = "<h2 id='questionArea'></h2><div id='optionsArea'></div><h3 id='numArea'></h3>";
+                    AnswerButton(currentQuestion)
+                    Questions(currentQuestion)
+                    QuestionChange(totalQuestion, currentQuestion)
+                }
+                else
+                    document.querySelector("#first").innerHTML = "<h2>Quiz Completed</h2><h3>Your Score is: "+score+"</h3><button onclick='Restart()' class='btn'>Restart Quiz</button";
+            }
+
+        </script>
+    </head>
+    <body>
+        <h1>Quiz</h1>
+        <div id="first">
+            <button class="btn" onclick="start()">Start</button>            
+        </div>
+        
+    </body>
+</html>
